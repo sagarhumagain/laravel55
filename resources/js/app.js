@@ -6,20 +6,21 @@
  */
 
 require('./bootstrap');
-
+//
 window.Vue = require('vue');
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
-
+//component path
 let routes = [
     { path: '/dashboard', component: require('./components/dashboard.vue' ).default },
-    { path: '/profile', component: require('./components/profile.vue').default }
+    { path: '/profile', component: require('./components/profile.vue').default },
+    { path: '/users', component: require('./components/users.vue').default }
   ]
-
+//routing object
 const router = new VueRouter({
-    mode: 'history',
+    mode: 'history', //keep track of history or refresh link 
     routes // short for `routes: routes`
   })
 /**
@@ -40,7 +41,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
+//initiation router object
 const app = new Vue({
     el: '#app',
     router
