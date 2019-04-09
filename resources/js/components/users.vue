@@ -48,6 +48,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <form @submit.prevent="createUser"> <!--  submit data without page refresh -->
       <div class="modal-body">
             <div class="form-group">
                 <input v-model="form.name" type="text" name="name" placeholder="Name"
@@ -82,8 +83,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary btn-danger" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Create</button>
+        <button type="submit" class="btn btn-primary">Create</button>
       </div>
+    </form>
     </div>
   </div>
 </div>
@@ -104,6 +106,12 @@
                     bio: '',
                     photo: ''
                 })
+            }
+        },
+        methods:{
+            // push http request
+            createUser(){
+                this.form.post('api/user')
             }
         },
         mounted() {
