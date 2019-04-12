@@ -11,7 +11,16 @@ window.Vue = require('vue');
 import Vue from 'vue'
 //importing vform
 import { Form, HasError, AlertError } from 'vform';
-import moment from 'moment'
+//importing moment js
+import moment from 'moment';
+//vue progress bar
+import VueProgressBar from 'vue-progressbar';
+Vue.use(VueProgressBar, {
+  color: 'rgb(143, 255, 199)',
+  failedColor: 'green',
+  height: '3px'
+})
+
 
 window.Form = Form;
 Vue.component(HasError.name, HasError)
@@ -31,10 +40,11 @@ const router = new VueRouter({
     mode: 'history', //keep track of history or refresh link 
     routes // short for `routes: routes`
   })
+  //uppercase 
   Vue.filter('capitalize', function (value) {
     return value.charAt(0).toUpperCase() + value.slice(1)
   })
-  
+  //moment js for date and time
   Vue.filter('mydate', function(created){
     return moment(created).format("MMM Do YY");              
   });

@@ -25,8 +25,8 @@
                     <td>{{user.id}}</td>
                     <td>{{user.name}}</td>
                     <td>{{user.email}}</td>
-                    <td>{{user.type | capitalize}}</td>
-                    <td>{{user.created_at | mydate}}</td>
+                    <td>{{user.type | capitalize}}</td> <!-- Uppercase -->
+                     <td>{{user.created_at | mydate}}</td> <!-- moment js -->
                     <td>
                         <a href="#"> <i class="fa fa-edit blue"></i> </a>
                         / 
@@ -117,7 +117,9 @@
             },
             // push http request
             createUser(){
+                this.$Progress.start()
                 this.form.post('api/user');
+                this.$Progress.finish()
             }
         },
         created() {
