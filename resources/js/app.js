@@ -10,7 +10,8 @@ require('./bootstrap');
 window.Vue = require('vue');
 import Vue from 'vue'
 //importing vform
-import { Form, HasError, AlertError } from 'vform'
+import { Form, HasError, AlertError } from 'vform';
+import moment from 'moment'
 
 window.Form = Form;
 Vue.component(HasError.name, HasError)
@@ -30,6 +31,13 @@ const router = new VueRouter({
     mode: 'history', //keep track of history or refresh link 
     routes // short for `routes: routes`
   })
+  Vue.filter('capitalize', function (value) {
+    return value.charAt(0).toUpperCase() + value.slice(1)
+  })
+  
+  Vue.filter('mydate', function(created){
+    return moment(created).format("MMM Do YY");              
+  });
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
