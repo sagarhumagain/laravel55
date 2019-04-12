@@ -119,6 +119,13 @@
             createUser(){
                 this.$Progress.start()
                 this.form.post('api/user');
+                $('#AddNew').modal('hide')
+            Toast.fire({
+                type: 'success',
+                title: 'success...',
+                text: 'Good Job!',
+                showConfirmButton: true,
+            })
                 this.$Progress.finish()
             }
         },

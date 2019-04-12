@@ -13,6 +13,14 @@ import Vue from 'vue'
 import { Form, HasError, AlertError } from 'vform';
 //importing moment js
 import moment from 'moment';
+//importing sweet alert
+import Swal from 'sweetalert2'
+window.Swal = Swal;
+const Toast = Swal.mixin({
+  position: 'center',
+  timer: 3000
+});
+window.Toast = Toast;
 //vue progress bar
 import VueProgressBar from 'vue-progressbar';
 Vue.use(VueProgressBar, {
@@ -20,11 +28,11 @@ Vue.use(VueProgressBar, {
   failedColor: 'green',
   height: '3px'
 })
-
-
+//vform
 window.Form = Form;
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
+
 
 import VueRouter from 'vue-router'
 //vue routing 
