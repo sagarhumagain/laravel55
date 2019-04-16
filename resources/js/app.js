@@ -28,6 +28,8 @@ Vue.use(VueProgressBar, {
   failedColor: 'green',
   height: '3px'
 })
+//costom event
+window.Fire = new Vue();
 //vform
 window.Form = Form;
 Vue.component(HasError.name, HasError)

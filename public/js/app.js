@@ -2003,6 +2003,7 @@ __webpack_require__.r(__webpack_exports__);
     createUser: function createUser() {
       this.$Progress.start();
       this.form.post('api/user');
+      Fire.$emit('AfterCreated');
       $('#AddNew').modal('hide');
       Toast.fire({
         type: 'success',
@@ -2016,10 +2017,11 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this2 = this;
 
-    this.loadUsers();
-    setInterval(function () {
-      return _this2.loadUsers();
-    }, 3000);
+    this.loadUsers(); //setInterval(() => this.loadUsers(), 3000);
+
+    Fire.$on('AfterCreated', function () {
+      _this2.loadUsers();
+    });
   }
 });
 
@@ -73812,7 +73814,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_progressbar__WEBPACK_IMPORTED
   color: 'rgb(143, 255, 199)',
   failedColor: 'green',
   height: '3px'
-}); //vform
+}); //costom event
+
+window.Fire = new vue__WEBPACK_IMPORTED_MODULE_0___default.a(); //vform
 
 window.Form = vform__WEBPACK_IMPORTED_MODULE_1__["Form"];
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["HasError"]);
