@@ -72,10 +72,37 @@ class UserController extends Controller
     {
         $user = auth('api')->user(); //updating data for profile component (image)
         //return ['message' => 'success'];
-        if($request->photo){
+
+        $this ->validate($request,[
+
+            "name" => 'required|string|max:191',
+            //validate email used previously
+            "email" => 'required|string|email|max:191|unique:users,email,'.$user->id,
+            "password" => 'sometimes|required|min:6'
+
+        ]);
+        //uploading image
+        $CurrentPhoto = $user->photo; //assigning current image name to database name(uniquely defined)
+        //if user upload diffetent image then it is not going to be the same name and upload it 
+        if($request->photo != $CurrentPhoto){
             $name =time().'.'.explode('/', explode(':', substr($request->photo, 0,strpos($request->photo, ';')))[1])[1];//extracting extention of image
             \Image::make($request->photo)->save(public_path('images/profile/').$name);//using image intervention
+            $request->merge(['photo' => $name]);
+
+            //defining variable for previous photo  to delete which is (currentphoto)
+            $userPhoto = public_path('images/profile/').$CurrentPhoto;
+            if(file_exists($userPhoto)){ //delete function
+                @unlink($userPhoto);
+            }
         }
+
+        if(!empty($request->password)){
+            $request->merge(['password'=> Hash::make($request ['password'])]);
+        }
+        //update user info 
+        $user->update($request->all());
+
+        return ['message' => "success"];
     }
 
     public function profile()

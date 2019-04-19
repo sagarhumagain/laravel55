@@ -17,7 +17,7 @@
                 <h5 class="widget-user-desc">Web Designer</h5>
               </div>
               <div class="widget-user-image">
-                <img class="img-circle" src="" alt="User Avatar">
+                <img class="img-circle" :src="getProfilePhoto()" alt="User Avatar">
               </div>
               <div class="card-footer">
                 <div class="row">
@@ -140,28 +140,55 @@
             }
         },
         methods:{
+            //upload user profile image
+            getProfilePhoto(){
+                return "images/profile/"+this.form.photo;
+            },
             //updating user info 
             updateInfo(){
-                this.form.put('api/profile/').then(()=>{
-
+                this.$Progress.start();
+                this.form.put('api/profile')
+                .then(()=>{
+                    Toast.fire({
+                              type: 'success',
+                              title: 'success...',
+                              text: 'Information has been updated.',
+                              showConfirmButton: true,
+                              })
+               this.$Progress.finish();
+                Fire.$emit('AfterCreated');
                 })
                 .catch(()=>{
-
+               this.$Progress.fail();
                 })
             },
-            //get image name 
+            //get image  
             updateProfile(e){
                 //console.log('uploading image')
                 let file = e.target.files[0];
-                let reader = new FileReader();
+                console.log(file);
+                if(file['size']< 2111775){
+                    let reader = new FileReader();
                 reader.onloadend = (file) => {
                     this.form.photo = reader.result;
                 }
                 reader.readAsDataURL(file);
+                }
+                else{
+                    Toast.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'You are uploading al large file',
+                    })
+                }
             }
         },
             created(){
-                axios.get("api/profile").then(({data})=>(this.form.fill(data)));//fill  data from api usercontroller
+                axios.get("api/profile").then(({data})=>(this.form.fill(data)));//fill data from api usercontroller
+                Fire.$on('AfterCreated', ()=>{
+                    axios.get("api/profile").then(({data})=>(this.form.fill(data)));//fill data from api usercontroller
+
+             });
         }
     }
 </script>

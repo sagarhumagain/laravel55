@@ -215,10 +215,7 @@
               this.loadUsers(); 
 
             });
-            Fire.$on('AfterDeleted', ()=>{
-              this.loadUsers(); 
-
-            });
+            
             
         }
     }
