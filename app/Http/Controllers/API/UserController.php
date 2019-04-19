@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\User;
+use App\User; //api route controllor from api php file
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api');//constructor for authenticated user or api authentication
     }
     /**
      * Display a listing of the resource.
@@ -67,7 +67,21 @@ class UserController extends Controller
     {
         //
     }
+    //update info of profile
+    public function updateProfile(Request $request)
+    {
+        $user = auth('api')->user(); //updating data for profile component (image)
+        //return ['message' => 'success'];
+        if($request->photo){
+            $name =time().'.'.explode('/', explode(':', substr($request->photo, 0,strpos($request->photo, ';')))[1])[1];//extracting extention of image
+            \Image::make($request->photo)->save(public_path('images/profile/').$name);//using image intervention
+        }
+    }
 
+    public function profile()
+    {
+        return auth('api')->user(); //showing data for profile component
+    }
     /**
      * Update the specified resource in storage.
      *
