@@ -91,7 +91,11 @@ Vue.component(
   'passport-personal-access-tokens',
   require('./components/passport/PersonalAccessTokens.vue').default
 );
-
+//component for error page
+Vue.component(
+  'error-page', // tag to use in html
+  require('./components/errorpage.vue').default
+);
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 

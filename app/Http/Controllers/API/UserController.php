@@ -28,8 +28,10 @@ class UserController extends Controller
     public function index()
     {
         //direct url restriction 
-        $this->authorize("isAdmin");
-        return User::latest()->paginate(10); 
+        //$this->authorize("isAdmin");
+        if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor')){ // giving access to different type of users
+        return User::latest()->paginate(10); //displaying users 
+        }
     }
 
     /**

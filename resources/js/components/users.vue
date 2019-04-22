@@ -1,7 +1,7 @@
 <template>
     <div class="container">
       <!-- can see this content ony if user is admin // vue authentication -->
-    <div class="row mt-5" v-if="$gate.isAdmin()">
+    <div class="row mt-5" v-if="$gate.isAdminOrAuthor()">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
@@ -27,6 +27,7 @@
                     <td>{{user.id}}</td>
                     <td>{{user.name}}</td>
                     <td>{{user.email}}</td>
+                    <!-- adding filters -->
                     <td>{{user.type | capitalize}}</td> <!-- Uppercase -->
                      <td>{{user.created_at | mydate}}</td> <!-- moment js -->
                     <td>
@@ -43,8 +44,12 @@
             <!-- /.card -->
           </div>
         </div>
+        <!-- displaying error page if user goes to that route  -->
+        <div v-if="$gate.isUser()"> 
+          <error-page></error-page>
+        </div>
               <!-- bootstrap modal -->
-        <div class="modal fade" id="AddNew" tabindex="-1" role="dialog" aria-labelledby="AddNewLabel" aria-hidden="true">
+<div class="modal fade" id="AddNew" tabindex="-1" role="dialog" aria-labelledby="AddNewLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -107,7 +112,7 @@
         data(){
             return{
                 editmode : false,
-                users: {}, //retriving data 
+                users: {}, //retriving data to fill in the form
                 form: new Form({
                     id: '',
                     name : '',
@@ -186,7 +191,7 @@
                           })
             },
             loadUsers(){
-              if(this.$gate.isAdmin()){
+              if(this.$gate.isAdminOrAuthor()){
                 axios.get("api/user").then(({data})=>(this.users = data.data));//loading data
               } 
             },
