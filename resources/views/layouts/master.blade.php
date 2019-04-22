@@ -78,6 +78,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </router-link>
           </li>
+          <!-- larvel authentication -->
+          @can('isAdmin')
           <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-cogs cyan"></i>
@@ -109,7 +111,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </router-link>
           </li>
-          
+          @endcan 
+          <!-- ./larvel authentication -->
           <li class="nav-item">
             <router-link to="/profile" class="nav-link">
               <i class="nav-icon fas fa-user green"></i>
@@ -163,6 +166,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </footer>
 </div>
 <!-- ./wrapper -->
+ <!-- vue js fro authentication -->
+@auth  
+<script>
+  window.user = @json(auth()->user())
+</script>
+@endauth
+ <!-- ./vue js fro authentication -->
+
 
 <script src="/js/app.js"></script>
 </body>

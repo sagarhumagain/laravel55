@@ -140,9 +140,11 @@
             }
         },
         methods:{
-            //upload user profile image
+            //upload user profile image 
             getProfilePhoto(){
-                return "images/profile/"+this.form.photo;
+                let photo = (this.form.photo.length>200) ? this.form.photo : "images/profile/"+this.form.photo ;
+                return photo;
+                //return "images/profile/"+this.form.photo;
             },
             //updating user info 
             updateInfo(){
@@ -186,8 +188,7 @@
             created(){
                 axios.get("api/profile").then(({data})=>(this.form.fill(data)));//fill data from api usercontroller
                 Fire.$on('AfterCreated', ()=>{
-                    axios.get("api/profile").then(({data})=>(this.form.fill(data)));//fill data from api usercontroller
-
+                    this.getProfilePhoto();
              });
         }
     }

@@ -1,6 +1,7 @@
 <template>
     <div class="container">
-    <div class="row mt-5">
+      <!-- can see this content ony if user is admin // vue authentication -->
+    <div class="row mt-5" v-if="$gate.isAdmin()">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
@@ -185,7 +186,9 @@
                           })
             },
             loadUsers(){
-                axios.get("api/user").then(({data})=>(this.users = data.data));//loading data 
+              if(this.$gate.isAdmin()){
+                axios.get("api/user").then(({data})=>(this.users = data.data));//loading data
+              } 
             },
             // push http request to create user
             createUser(){
@@ -215,7 +218,10 @@
               this.loadUsers(); 
 
             });
-            
+            Fire.$on('AfterDeleted', ()=>{
+              this.loadUsers(); 
+
+            });
             
         }
     }

@@ -11,6 +11,12 @@ window.Vue = require('vue');
 import Vue from 'vue'
 //importing vform
 import { Form, HasError, AlertError } from 'vform';
+
+//importing gate.js 
+import Gate from "./Gate";
+//prototype
+Vue.prototype.$gate = new Gate(window.user);
+
 //importing moment js
 import moment from 'moment';
 //importing sweet alert
